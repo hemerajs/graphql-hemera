@@ -1,0 +1,26 @@
+{
+  "name": "hemera-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "babel ./src --out-dir ./build --copy-files --source-maps"
+  },
+  "author": "Dustin Deus <deusdustin@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-plugin-inline-import": "^2.0.4",
+    "babel-plugin-istanbul": "^3.1.2",
+    "babel-preset-env": "^1.1.8",
+    "babel-register": "^6.22.0",
+    "eslint": "^3.14.0"
+  },
+  "dependencies": {
+    "apollo-server": "^0.3.3",
+    "graphql": "^0.8.2",
+    "graphql-server-hapi": "^0.5.1",
+    "graphql-tools": "^0.9.1",
+    "hapi": "^16.1.0"
+  }
+}
