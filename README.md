@@ -13,6 +13,21 @@ This setup demonstrate how to use Hemera for resolving your GraphQL queries. Bec
 - The [Resolvers](src/graphql/resolvers.js) are fullfilling by Hemera
 - The [payload](src/user-service/index.js) is validated by Hemera
 
+## Show me
+
+```js
+const resolvers = (hemera) => ({
+  Query: {
+    getUserById (root, { id }) {
+      return hemera.act({
+        topic: 'user',
+        cmd: 'getUserById',
+        id
+      })
+    },
+    ...
+```
+
 ## Getting started
 
 ```js
