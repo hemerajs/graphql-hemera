@@ -7,8 +7,7 @@ const topic = 'user'
 const hemera = new Hemera(nats, {
   logLevel: 'info',
   childLogger: true,
-  tag: 'hemera-graphql',
-  generator: true
+  tag: 'hemera-graphql'
 })
 
 hemera.use(HemeraJoi)
