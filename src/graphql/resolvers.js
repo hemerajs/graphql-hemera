@@ -1,19 +1,29 @@
-const resolvers = (models) => ({
+const resolvers = (hemera) => ({
   Query: {
-    getUserById(root, { id }) {
-      return models.User.findById(id).then((response) => response);
+    getUserById (root, { id }) {
+      return hemera.act({
+        topic: 'user',
+        cmd: 'getUserById',
+        id
+      })
     },
-
-    getUserByEmail(root, { email }) {
-      return models.User.findOne({ email }).then((response) => response);
-    },
+    getUserByEmail (root, { email }) {
+      return hemera.act({
+        topic: 'user',
+        cmd: 'getUserByEmail',
+        email
+      })
+    }
   },
   Mutation: {
-    createUser(root, args) {
-      const user = new models.User(args);
-      return user.save().then((response) => response);
-    },
-  },
-});
+    createUser (root, args) {
+      return hemera.act({
+        topic: 'user',
+        cmd: 'createUser',
+        user: args
+      })
+    }
+  }
+})
 
-module.exports = resolvers;
+module.exports = resolvers

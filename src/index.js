@@ -1,54 +1,70 @@
-import hapi from 'hapi';
-import { graphqlHapi } from 'graphql-server-hapi';
-import { apolloHapi, graphiqlHapi } from 'apollo-server'                                     ;
-import { makeExecutableSchema } from 'graphql-tools';
-import graphqlSchema from './graphql/schema.graphql';
-import createResolvers from './graphql/resolvers';
+import hapi from 'hapi'
+import { graphqlHapi } from 'graphql-server-hapi'
+import { graphiqlHapi } from 'apollo-server'
+import { makeExecutableSchema } from 'graphql-tools'
+import graphqlSchema from './graphql/schema.graphql'
+import createResolvers from './graphql/resolvers'
+import Hemera from 'nats-hemera'
+import Nats from 'nats'
 
-const server = new hapi.Server();
+// start example user service
+import './user-service'
 
-const HOST = 'localhost';
-const PORT = 3000;
+const server = new hapi.Server()
+
+const HOST = 'localhost'
+const PORT = 3000
 
 server.connection({
-    host: HOST,
-    port: PORT,
-});
+  host: HOST,
+  port: PORT
+})
 
-// Define schema and resolvers
-const executableSchema = makeExecutableSchema({
-  typeDefs: [graphqlSchema],
-  resolvers: createResolvers({ }),
-});
+const nats = Nats.connect()
 
-// Register graphql server
-server.register({
+const hemera = new Hemera(nats, {
+  logLevel: 'info',
+  childLogger: true,
+  tag: 'hemera-graphql',
+  generators: true
+})
+
+hemera.ready(() => {
+  // Define schema and resolvers
+  const executableSchema = makeExecutableSchema({
+    typeDefs: [graphqlSchema],
+    resolvers: createResolvers(hemera)
+  })
+
+  // Register graphql server
+  server.register({
     register: graphqlHapi,
     options: {
       path: '/graphql',
       graphqlOptions: {
-        schema: executableSchema,
+        schema: executableSchema
       },
       route: {
         cors: true
       }
-    },
-});
-
-// Register graphql introspection endpoint
-server.register({
-  register: graphiqlHapi,
-  options: {
-    path: '/graphiql',
-    graphiqlOptions: {
-      endpointURL: '/graphql',
-    },
-  },
-});
-
-server.start((err) => {
-    if (err) {
-        throw err;
     }
-    console.log(`Server running at: ${server.info.uri}`);
-});
+  })
+
+  // Register graphql introspection endpoint
+  server.register({
+    register: graphiqlHapi,
+    options: {
+      path: '/graphiql',
+      graphiqlOptions: {
+        endpointURL: '/graphql'
+      }
+    }
+  })
+
+  server.start((err) => {
+    if (err) {
+      throw err
+    }
+    console.log(`Server running at: ${server.info.uri}`)
+  })
+})
