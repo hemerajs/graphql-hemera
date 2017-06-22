@@ -14,7 +14,7 @@ This setup demonstrate how to use Hemera for resolving your GraphQL queries. Bec
 - The [payload](src/user-service/index.js) is validated by Hemera
 
 ## Show me
-
+Resolver
 ```js
 const resolvers = (hemera) => ({
   Query: {
@@ -26,6 +26,17 @@ const resolvers = (hemera) => ({
       })
     },
     ...
+```
+Implementation: Can be anywhere
+```js
+  hemera.add({
+    topic,
+    cmd: 'getUserById',
+    id: Joi.number().required()
+  }, function (req, reply) {
+    const matchedUser = users.filter(x => x.id === req.id)
+    reply(null, matchedUser.length ? matchedUser[0] : null)
+  })
 ```
 
 ## Getting started
