@@ -27,7 +27,7 @@ const resolvers = (hemera) => ({
     },
     ...
 ```
-Implementation: Can be anywhere
+Implementation: Can be hosted anywhere
 ```js
   hemera.add({
     topic,
