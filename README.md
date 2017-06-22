@@ -9,7 +9,7 @@ GraphQL is a query language for APIs and a runtime for fulfilling those queries 
 ## What is Hemera?
 [Hemera](https://github.com/hemerajs/hemera) is a microservice toolkit based on the [NATS](https://nats.io/) Server. You can use efficient pattern matching to have the most flexibility in defining your RPC's. It doesn't matter where your server or client lives. With Hemera you can create microservices without to worry about all the different aspects in a distributed system like routing, load-balancing, service-discovery, clustering, health-checks ...
 
-This setup demonstrate how to use Hemera to resolve your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can provide you a way to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
+This setup demonstrate how to use Hemera for resolving your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can provide you a way to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
 
 - The [User Service](src/user-service) is provided by Hemera
 - The [Resolvers](src/graphql/resolvers.js) are fullfilling by Hemera
