@@ -6,7 +6,7 @@ GraphQL is a query language for APIs and a runtime for fulfilling those queries 
 
 ![preview](https://github.com/hemerajs/graphql-hemera/blob/master/media/preview.PNG)
 
-This setup demonstrate how to use Hemera to resolve your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can provide you a way to manage this in a very simple and flexibel way. Combine GraphQL with the power of pattern matching.
+This setup demonstrate how to use Hemera to resolve your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can provide you a way to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
 
 - The [User Service](src/user-service) is provided by Hemera
 - The [Resolvers](src/graphql/resolvers) are proxied to Hemera
