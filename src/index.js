@@ -25,8 +25,7 @@ const nats = Nats.connect()
 const hemera = new Hemera(nats, {
   logLevel: 'info',
   childLogger: true,
-  tag: 'hemera-graphql',
-  generators: true
+  tag: 'hemera-graphql'
 })
 
 hemera.ready(() => {
