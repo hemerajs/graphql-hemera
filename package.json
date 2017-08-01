@@ -7,7 +7,10 @@
     "start": "nodemon ./src/index.js --exec babel-node ./src --out-dir ./build --copy-files --source-maps",
     "watch": "babel -w ./src --out-dir ./build --copy-files --source-maps",
     "build": "babel ./src --out-dir ./build --copy-files --source-maps",
-    "lint": "standard --fix"
+    "lint": "standard --fix",
+    "patch": "np patch --yolo",
+    "minor": "np minor --yolo",
+    "major": "np major --yolo"
   },
   "author": "Dustin Deus <deusdustin@gmail.com>",
   "license": "ISC",
@@ -23,12 +26,12 @@
   "dependencies": {
     "apollo-server": "0.3.x",
     "graphql": "0.10.x",
-    "graphql-server-hapi": "1.0.x",
-    "graphql-tools": "1.1.x",
-    "hapi": "16.5.x",
-    "hemera-joi": "^1.1.13",
+    "graphql-server-hapi": "^1.0.5",
+    "graphql-tools": "^1.1.0",
+    "hapi": "^16.5.0",
+    "hemera-joi": "^1.2.1",
     "nats": "0.7.x",
-    "nats-hemera": "^1.4.0"
+    "nats-hemera": "^1.5.1"
   },
   "standard": {
     "ignore": [
