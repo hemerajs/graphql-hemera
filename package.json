@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "nodemon ./src/index.js --exec babel-node ./src --out-dir ./build --copy-files --source-maps",
+    "start": "BABEL_DISABLE_CACHE=1 nodemon -e js,graphql ./src/index.js --exec babel-node --watch ./src --out-dir ./build --copy-files --source-maps",
     "watch": "babel -w ./src --out-dir ./build --copy-files --source-maps",
     "build": "babel ./src --out-dir ./build --copy-files --source-maps",
     "lint": "standard --fix",
