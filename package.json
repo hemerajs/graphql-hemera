@@ -15,23 +15,23 @@
   "author": "Dustin Deus <deusdustin@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "6.24.x",
+    "babel-cli": "6.26.x",
     "babel-plugin-inline-import": "^2.0.6",
     "babel-plugin-istanbul": "4.1.x",
-    "babel-preset-env": "1.5.x",
-    "babel-register": "6.24.x",
-    "nodemon": "^1.11.0",
-    "standard": "^10.0.2"
+    "babel-preset-env": "1.6.x",
+    "babel-register": "6.26.x",
+    "nodemon": "^1.12.1",
+    "standard": "^10.0.3"
   },
   "dependencies": {
     "apollo-server": "0.3.x",
-    "graphql": "0.10.x",
-    "graphql-server-hapi": "^1.0.5",
-    "graphql-tools": "^1.1.0",
-    "hapi": "^16.5.0",
-    "hemera-joi": "^1.2.1",
+    "graphql": "0.11.x",
+    "graphql-server-hapi": "^1.1.2",
+    "graphql-tools": "^2.0.0",
+    "hapi": "^16.6.2",
+    "hemera-joi": "^2.0.0",
     "nats": "0.7.x",
-    "nats-hemera": "^1.5.1"
+    "nats-hemera": "^2.0.0-0"
   },
   "standard": {
     "ignore": [

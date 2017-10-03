@@ -17,7 +17,7 @@ let id = 1
 const users = [{ id, name: 'peter', email: 'peter@gmail.com' }]
 
 hemera.ready(() => {
-  let Joi = hemera.exposition['hemera-joi'].joi
+  let Joi = hemera.joi
 
   hemera.add({
     topic,
