@@ -1,13 +1,13 @@
-const resolvers = (hemera) => ({
+const resolvers = hemera => ({
   Query: {
-    getUserById (root, { id }) {
+    getUserById(root, { id }) {
       return hemera.act({
         topic: 'user',
         cmd: 'getUserById',
         id
       })
     },
-    getUserByEmail (root, { email }) {
+    getUserByEmail(root, { email }) {
       return hemera.act({
         topic: 'user',
         cmd: 'getUserByEmail',
@@ -16,7 +16,7 @@ const resolvers = (hemera) => ({
     }
   },
   Mutation: {
-    createUser (root, args) {
+    createUser(root, args) {
       return hemera.act({
         topic: 'user',
         cmd: 'createUser',

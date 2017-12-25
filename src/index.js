@@ -1,6 +1,5 @@
-import hapi from 'hapi'
-import { graphqlHapi } from 'graphql-server-hapi'
-import { graphiqlHapi } from 'apollo-server'
+import Hapi from 'hapi'
+import { graphqlHapi, graphiqlHapi } from 'apollo-server-hapi'
 import { makeExecutableSchema } from 'graphql-tools'
 import graphqlSchema from './graphql/schema.graphql'
 import createResolvers from './graphql/resolvers'
@@ -10,34 +9,25 @@ import Nats from 'nats'
 // start example user service
 import './user-service'
 
-const server = new hapi.Server()
-
 const HOST = 'localhost'
 const PORT = 3000
 
-server.connection({
-  host: HOST,
-  port: PORT
-})
-
-const nats = Nats.connect()
-
-const hemera = new Hemera(nats, {
-  logLevel: 'info',
-  childLogger: true,
-  tag: 'hemera-graphql'
-})
-
-hemera.ready(() => {
+async function initServer(port, host) {
   // Define schema and resolvers
   const executableSchema = makeExecutableSchema({
     typeDefs: [graphqlSchema],
     resolvers: createResolvers(hemera)
   })
 
+  const server = new Hapi.server({
+    host,
+    port,
+    debug: { request: ['error'] }
+  })
+
   // Register graphql server
-  server.register({
-    register: graphqlHapi,
+  await server.register({
+    plugin: graphqlHapi,
     options: {
       path: '/graphql',
       graphqlOptions: {
@@ -50,8 +40,8 @@ hemera.ready(() => {
   })
 
   // Register graphql introspection endpoint
-  server.register({
-    register: graphiqlHapi,
+  await server.register({
+    plugin: graphiqlHapi,
     options: {
       path: '/graphiql',
       graphiqlOptions: {
@@ -60,10 +50,30 @@ hemera.ready(() => {
     }
   })
 
-  server.start((err) => {
-    if (err) {
-      throw err
-    }
-    console.log(`Server running at: ${server.info.uri}`)
+  return server
+}
+
+function initHemera() {
+  const nats = Nats.connect()
+
+  const hemera = new Hemera(nats, {
+    logLevel: 'info',
+    childLogger: true,
+    tag: 'hemera-graphql'
   })
+
+  return hemera
+}
+
+const hemera = initHemera()
+hemera.ready(async () => {
+  const server = await initServer(PORT, HOST)
+
+  try {
+    await server.start()
+  } catch (err) {
+    console.log(`Error while starting server: ${err.message}`)
+  }
+
+  console.log(`Server running at: ${server.info.uri}`)
 })

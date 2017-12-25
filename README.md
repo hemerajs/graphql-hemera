@@ -43,7 +43,7 @@ Implementation: Can be hosted anywhere
 
 ```js
 npm install
-npm run start
+npm start
 ```
 
 ## GraphiQL Dashboard
