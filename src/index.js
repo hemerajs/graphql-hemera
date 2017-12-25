@@ -12,18 +12,19 @@ import './user-service'
 const HOST = 'localhost'
 const PORT = 3000
 
-async function initServer(port, host) {
+async function InitServer(port, host) {
   // Define schema and resolvers
   const executableSchema = makeExecutableSchema({
     typeDefs: [graphqlSchema],
     resolvers: createResolvers(hemera)
   })
-
+  /* eslint-disable */
   const server = new Hapi.server({
     host,
     port,
     debug: { request: ['error'] }
   })
+  /* eslint-enable */
 
   // Register graphql server
   await server.register({
@@ -53,7 +54,7 @@ async function initServer(port, host) {
   return server
 }
 
-function initHemera() {
+function InitHemera() {
   const nats = Nats.connect()
 
   const hemera = new Hemera(nats, {
@@ -65,9 +66,9 @@ function initHemera() {
   return hemera
 }
 
-const hemera = initHemera()
+const hemera = InitHemera()
 hemera.ready(async () => {
-  const server = await initServer(PORT, HOST)
+  const server = await InitServer(PORT, HOST)
 
   try {
     await server.start()
