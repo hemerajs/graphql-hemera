@@ -12,7 +12,7 @@ import './user-service'
 const HOST = 'localhost'
 const PORT = 3000
 
-async function InitServer(port, host) {
+async function InitServer(hemera, port, host) {
   // Define schema and resolvers
   const executableSchema = makeExecutableSchema({
     typeDefs: [graphqlSchema],
@@ -66,15 +66,18 @@ function InitHemera() {
   return hemera
 }
 
-const hemera = InitHemera()
-hemera.ready(async () => {
-  const server = await InitServer(PORT, HOST)
-
+async function start() {
   try {
-    await server.start()
-  } catch (err) {
-    console.log(`Error while starting server: ${err.message}`)
-  }
+    const hemera = InitHemera()
+    await hemera.ready()
 
-  console.log(`Server running at: ${server.info.uri}`)
-})
+    const server = await InitServer(hemera, PORT, HOST)
+    await server.start()
+    console.log(`Server running at: ${server.info.uri}`)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
+  }
+}
+
+start()
