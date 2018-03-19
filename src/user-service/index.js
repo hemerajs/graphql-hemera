@@ -11,7 +11,6 @@ const hemera = new Hemera(nats, {
 })
 
 hemera.use(HemeraJoi)
-hemera.setOption('payloadValidator', 'hemera-joi')
 
 let id = 1
 const users = [{ id, name: 'peter', email: 'peter@gmail.com' }]
