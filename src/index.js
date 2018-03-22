@@ -54,7 +54,7 @@ async function InitServer(hemera, port, host) {
   return server
 }
 
-function InitHemera() {
+function initHemera() {
   const nats = Nats.connect()
 
   const hemera = new Hemera(nats, {
@@ -68,7 +68,7 @@ function InitHemera() {
 
 async function start() {
   try {
-    const hemera = InitHemera()
+    const hemera = initHemera()
     await hemera.ready()
 
     const server = await InitServer(hemera, PORT, HOST)
