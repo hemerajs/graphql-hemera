@@ -56,7 +56,8 @@ async function start() {
 
     const server = await createServer(hemera, PORT, HOST)
     await server.start()
-    console.log(`Server running at: ${server.info.uri}`)
+    console.log(`🚀  Server running at: ${server.info.uri}`)
+    console.log(`🚀  Graphql Server running at: ${server.info.uri}/graphql`)
   } catch (err) {
     console.error(err)
     process.exit(1)
