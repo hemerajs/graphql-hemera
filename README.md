@@ -22,11 +22,11 @@ Resolver
 const resolvers = hemera => ({
   Query: {
     async getUserById(root, { id }) {
-      return hemera.act({
+      return (await hemera.act({
         topic: 'user',
         cmd: 'getUserById',
         id
-      })
+      })).data
     }
   }
 })
@@ -41,9 +41,7 @@ hemera.add(
     cmd: 'getUserById',
     id: Joi.number().required()
   },
-  async function(req, reply) {
-    return users.filter(x => x.id === req.id)
-  }
+  async req => Store.getUserById(req.id)
 )
 ```
 
