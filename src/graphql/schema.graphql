@@ -14,7 +14,11 @@ type Query {
 type Mutation {
   createUser(input: UserInput): User
 }
+type Subscription {
+  userAdded: User
+}
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }

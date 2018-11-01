@@ -6,41 +6,20 @@ GraphQL is a query language for APIs and a runtime for fulfilling those queries 
 
 ## What is Hemera?
 
-[Hemera](https://github.com/hemerajs/hemera) is a microservice toolkit based on the [NATS](https://nats.io/) Server. You can use efficient pattern matching to have the most flexibility in defining your RPC's. It doesn't matter where your server or client lives. With Hemera you can create microservices without to worry about all the different aspects in a distributed system like routing, load-balancing, service-discovery, clustering, health-checks and more.
+[Hemera](https://github.com/hemerajs/hemera) is a small wrapper around the official [NATS](https://nats.io/) driver. [NATS](https://nats.io/) is a simple, fast and reliable solution for the internal communication of a distributed system.
 
-This setup demonstrate how to use Hemera for resolving your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can provide you a way to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
-
-- The [User Service](src/plugins/user-management) is provided by a Hemera plugin
-- The [Resolvers](src/graphql/resolvers.js) are fullfilled by Hemera
+This demo demonstrate how you can use Hemera for resolving your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can help you to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
 
 ## Getting started
 
 Here you can see a simple example to resolve a graphql query with Hemera. Hemera act as a api gateway to your services.
-```js
-const resolvers = hemera => ({
-  Query: {
-    async getUserById(root, { id }) {
-      return (await hemera.act({
-        topic: 'user',
-        cmd: 'getUserById',
-        id
-      })).data
-    }
-  }
-})
-```
 
-Define the implementation of your graphql resolver. This could be your `user-service`.
-```js
-hemera.add(
-  {
-    topic,
-    cmd: 'getUserById',
-    id: Joi.number().required()
-  },
-  async req => Store.getUserById(req.id)
-)
-```
+1. Add a graphql primitive to the [schema](/src/graphql/schema.graphql).
+2. Add a [resolver](/src/graphql/resolvers.js) bridge to your hemera service.
+3. Implement your hemera service [resolver](/src/plugins/user-management/index.js).
+
+This demo also provide a sample Graphql subscription. Subscriptions allows to push messages to the client in realtime.
+[Here](/demo.md) you can find some graphql queries which can be executed in the playground.
 
 ## Getting started
 

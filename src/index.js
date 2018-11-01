@@ -1,8 +1,8 @@
 import Hapi from 'hapi'
 import { ApolloServer } from 'apollo-server-hapi'
-import { makeExecutableSchema } from 'graphql-tools'
+import { PubSub, makeExecutableSchema } from 'apollo-server'
 import graphqlSchema from './graphql/schema.graphql'
-import createResolvers from './graphql/resolvers'
+import resolvers from './graphql/resolvers'
 import UserManagement from './plugins/user-management'
 import HemeraJoi from 'hemera-joi'
 import Hemera from 'nats-hemera'
@@ -18,10 +18,11 @@ async function createServer(hemera, port, host) {
     port,
     debug: { request: ['error'], log: ['error'] }
   })
+  const pubsub = new PubSub()
   // Define schema and resolvers
   const executableSchema = makeExecutableSchema({
-    typeDefs: [graphqlSchema],
-    resolvers: createResolvers(hemera)
+    typeDefs: graphqlSchema,
+    resolvers: resolvers({ hemera, pubsub })
   })
   const server = new ApolloServer({
     schema: executableSchema,
