@@ -8,11 +8,12 @@ GraphQL is a query language for APIs and a runtime for fulfilling those queries 
 
 [Hemera](https://github.com/hemerajs/hemera) is a small wrapper around the official [NATS](https://nats.io/) driver. [NATS](https://nats.io/) is a simple, fast and reliable solution for the internal communication of a distributed system.
 
+## Introduction
+
 This demo demonstrate how you can use Hemera for resolving your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers Hemera can help you to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
 
-## Getting started
-
 Here you can see a simple example to resolve a graphql query with Hemera. Hemera act as a api gateway to your services.
+If you want to extend the demo you have to follow some steps:
 
 1. Add a GraphQL  primitive to the [schema](/src/graphql/schema.graphql).
 2. Add a [resolver](/src/graphql/resolvers.js) bridge to your hemera service.
