@@ -44,8 +44,7 @@ export default Hp(
         })
       },
       function(req, reply) {
-        store.createUser(req.user)
-        reply(null, true)
+        reply(null, store.createUser(req.user))
       }
     )
   },

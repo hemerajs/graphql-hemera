@@ -10,6 +10,9 @@
     "build": "babel ./src --out-dir ./build --copy-files --source-maps",
     "lint": "eslint ./**/*.js"
   },
+  "engines": {
+    "node": ">=8"
+  },
   "author": "Dustin Deus <deusdustin@gmail.com>",
   "license": "ISC",
   "devDependencies": {

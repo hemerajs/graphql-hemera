@@ -20,7 +20,7 @@ const resolvers = hemera => ({
       return (await hemera.act({
         topic: 'user',
         cmd: 'createUser',
-        user: args
+        user: args.input
       })).data
     }
   }

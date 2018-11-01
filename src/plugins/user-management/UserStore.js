@@ -17,5 +17,6 @@ export class UserStore {
   createUser(user) {
     user.id = this.getID
     this.users.push(user)
+    return user
   }
 }

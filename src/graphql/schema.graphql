@@ -1,13 +1,18 @@
 type User {
   id: ID!
   email: String!
+  name: String!
+}
+input UserInput {
+  email: String
+  name: String
 }
 type Query {
   getUserById(id: ID!): User
   getUserByEmail(email: String!): User
 }
 type Mutation {
-  createUser(email: String!): User
+  createUser(input: UserInput): User
 }
 schema {
   query: Query
