@@ -12,18 +12,26 @@ const HOST = 'localhost'
 const PORT = 3000
 
 async function createServer(hemera, port, host) {
+  /* eslint-disable-next-line */
+  const app = new Hapi.server({
+    host,
+    port,
+    debug: { request: ['error'], log: ['error'] }
+  })
   // Define schema and resolvers
   const executableSchema = makeExecutableSchema({
     typeDefs: [graphqlSchema],
     resolvers: createResolvers(hemera)
   })
-  const server = new ApolloServer({ schema: executableSchema })
-
-  /* eslint-disable-next-line */
-  const app = new Hapi.server({
-    host,
-    port,
-    debug: { request: ['error'] }
+  const server = new ApolloServer({
+    schema: executableSchema,
+    formatError: error => {
+      app.log(['error', 'graphql'], error)
+      return error
+      // Or, you can delete the exception information
+      // delete error.extensions.exception;
+      // return error;
+    }
   })
 
   await server.applyMiddleware({

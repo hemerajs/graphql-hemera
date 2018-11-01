@@ -5,7 +5,7 @@ const resolvers = hemera => ({
         topic: 'user',
         cmd: 'getUserById',
         id
-      })).data
+      }))
     },
     async getUserByEmail(root, { email }) {
       return (await hemera.act({
