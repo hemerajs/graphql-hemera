@@ -1,5 +1,5 @@
 import Hapi from 'hapi'
-import { graphqlHapi, graphiqlHapi } from 'apollo-server-hapi'
+import { ApolloServer } from 'apollo-server-hapi'
 import { makeExecutableSchema } from 'graphql-tools'
 import graphqlSchema from './graphql/schema.graphql'
 import createResolvers from './graphql/resolvers'
@@ -18,40 +18,23 @@ async function InitServer(hemera, port, host) {
     typeDefs: [graphqlSchema],
     resolvers: createResolvers(hemera)
   })
+  const server = new ApolloServer({ schema: executableSchema })
+
   /* eslint-disable */
-  const server = new Hapi.server({
+  const app = new Hapi.server({
     host,
     port,
     debug: { request: ['error'] }
   })
   /* eslint-enable */
 
-  // Register graphql server
-  await server.register({
-    plugin: graphqlHapi,
-    options: {
-      path: '/graphql',
-      graphqlOptions: {
-        schema: executableSchema
-      },
-      route: {
-        cors: true
-      }
-    }
+  await server.applyMiddleware({
+    app
   })
 
-  // Register graphql introspection endpoint
-  await server.register({
-    plugin: graphiqlHapi,
-    options: {
-      path: '/graphiql',
-      graphiqlOptions: {
-        endpointURL: '/graphql'
-      }
-    }
-  })
+  await server.installSubscriptionHandlers(app.listener)
 
-  return server
+  return app
 }
 
 function initHemera() {

@@ -10,9 +10,9 @@ GraphQL is a query language for APIs and a runtime for fulfilling those queries 
 
 This setup demonstrate how to use Hemera for resolving your GraphQL queries. Because of the flexibility of GraphQL you have to deal with many resolvers hemera can provide you a way to manage this in a very simple and flexible way. Combine GraphQL with the power of pattern matching.
 
-* The [User Service](src/user-service) is provided by Hemera
-* The [Resolvers](src/graphql/resolvers.js) are fullfilled by Hemera
-* The [payload](src/user-service/index.js) is validated by Hemera
+- The [User Service](src/user-service) is provided by Hemera
+- The [Resolvers](src/graphql/resolvers.js) are fullfilled by Hemera
+- The [payload](src/user-service/index.js) is validated by Hemera
 
 ## Show me
 
@@ -21,14 +21,12 @@ Resolver
 ```js
 const resolvers = hemera => ({
   Query: {
-    getUserById(root, { id }) {
-      return hemera
-        .act({
-          topic: 'user',
-          cmd: 'getUserById',
-          id
-        })
-        .then(resp => resp.data)
+    async getUserById(root, { id }) {
+      return hemera.act({
+        topic: 'user',
+        cmd: 'getUserById',
+        id
+      })
     }
   }
 })
@@ -44,8 +42,7 @@ hemera.add(
     id: Joi.number().required()
   },
   async function(req, reply) {
-    const matchedUser = users.filter(x => x.id === req.id)
-    return matchedUser.length ? matchedUser[0] : null
+    return users.filter(x => x.id === req.id)
   }
 )
 ```
@@ -60,7 +57,7 @@ npm start
 ## GraphiQL Dashboard
 
 ```
-http://localhost:3000/graphiql
+http://localhost:3000/graphql
 ```
 
 ## GraphQL endpoint
