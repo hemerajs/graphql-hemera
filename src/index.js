@@ -3,16 +3,15 @@ import { ApolloServer } from 'apollo-server-hapi'
 import { makeExecutableSchema } from 'graphql-tools'
 import graphqlSchema from './graphql/schema.graphql'
 import createResolvers from './graphql/resolvers'
+import UserManagement from './plugins/user-management'
+import HemeraJoi from 'hemera-joi'
 import Hemera from 'nats-hemera'
 import Nats from 'nats'
-
-// start example user service
-import './user-service'
 
 const HOST = 'localhost'
 const PORT = 3000
 
-async function InitServer(hemera, port, host) {
+async function createServer(hemera, port, host) {
   // Define schema and resolvers
   const executableSchema = makeExecutableSchema({
     typeDefs: [graphqlSchema],
@@ -20,13 +19,12 @@ async function InitServer(hemera, port, host) {
   })
   const server = new ApolloServer({ schema: executableSchema })
 
-  /* eslint-disable */
+  /* eslint-disable-next-line */
   const app = new Hapi.server({
     host,
     port,
     debug: { request: ['error'] }
   })
-  /* eslint-enable */
 
   await server.applyMiddleware({
     app
@@ -37,24 +35,26 @@ async function InitServer(hemera, port, host) {
   return app
 }
 
-function initHemera() {
+function createHemera() {
   const nats = Nats.connect()
-
   const hemera = new Hemera(nats, {
     logLevel: 'info',
     childLogger: true,
     tag: 'hemera-graphql'
   })
 
+  hemera.use(HemeraJoi)
+  hemera.use(UserManagement)
+
   return hemera
 }
 
 async function start() {
   try {
-    const hemera = initHemera()
+    const hemera = createHemera()
     await hemera.ready()
 
-    const server = await InitServer(hemera, PORT, HOST)
+    const server = await createServer(hemera, PORT, HOST)
     await server.start()
     console.log(`Server running at: ${server.info.uri}`)
   } catch (err) {

@@ -1,33 +1,27 @@
 const resolvers = hemera => ({
   Query: {
-    getUserById(root, { id }) {
-      return hemera
-        .act({
-          topic: 'user',
-          cmd: 'getUserById',
-          id
-        })
-        .then(resp => resp.data)
+    async getUserById(root, { id }) {
+      return (await hemera.act({
+        topic: 'user',
+        cmd: 'getUserById',
+        id
+      })).data
     },
-    getUserByEmail(root, { email }) {
-      return hemera
-        .act({
-          topic: 'user',
-          cmd: 'getUserByEmail',
-          email
-        })
-        .then(resp => resp.data)
+    async getUserByEmail(root, { email }) {
+      return (await hemera.act({
+        topic: 'user',
+        cmd: 'getUserByEmail',
+        email
+      })).data
     }
   },
   Mutation: {
-    createUser(root, args) {
-      return hemera
-        .act({
-          topic: 'user',
-          cmd: 'createUser',
-          user: args
-        })
-        .then(resp => resp.data)
+    async createUser(root, args) {
+      return (await hemera.act({
+        topic: 'user',
+        cmd: 'createUser',
+        user: args
+      })).data
     }
   }
 })
