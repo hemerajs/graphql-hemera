@@ -24,6 +24,9 @@ This demo also provide a sample GraphQL  subscription. Subscriptions allows to p
 
 ## Getting started
 
+1. [Downloads](https://nats.io/download/) NATS
+2. Start NATS `./gnatsd`
+3. Start the application
 ```js
 npm install
 npm start
