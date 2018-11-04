@@ -1,6 +1,11 @@
 {
   "plugins": [
-    "babel-plugin-inline-import"
+    ["babel-plugin-inline-import", {
+      "extensions": [
+        ".json",
+        ".graphql"
+      ]
+    }]
   ],
   "presets": [
     ["env", {

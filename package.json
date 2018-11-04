@@ -5,10 +5,10 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "nodemon ./src/index.js --exec babel-node ./src --out-dir ./build --copy-files --source-maps",
-    "watch": "babel -w ./src --out-dir ./build --copy-files --source-maps",
+    "start": "cross-env BABEL_DISABLE_CACHE=1 nodemon ./src/index.js --exec babel-node --watch ./src --out-dir ./build --copy-files --source-maps",
     "build": "babel ./src --out-dir ./build --copy-files --source-maps",
-    "lint": "eslint ./**/*.js"
+    "lint": "eslint ./**/*.js",
+    "format": "prettier --write ./src/**/*.js ./src/**/*.graphql"
   },
   "engines": {
     "node": ">=8"
@@ -20,7 +20,7 @@
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-istanbul": "^5.1.0",
     "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-hemera": "0.0.2",
     "nodemon": "^1.18.5",
