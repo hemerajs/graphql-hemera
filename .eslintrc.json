@@ -1,3 +1,6 @@
 {
-  "extends": "hemera"
+  "extends": "hemera",
+  "rules": {
+    "node/no-unsupported-features/es-syntax": ["off"]
+  }
 }

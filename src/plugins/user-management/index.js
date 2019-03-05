@@ -1,10 +1,10 @@
-import { UserStore } from './UserStore'
+import UserStore from './UserStore'
 
 const Hp = require('hemera-plugin')
 
 export default Hp(
-  async function userStorePlugin(hemera, options) {
-    let Joi = hemera.joi
+  async function userStorePlugin(hemera) {
+    const Joi = hemera.joi
     const topic = 'user'
     const store = new UserStore()
 
@@ -14,7 +14,7 @@ export default Hp(
         cmd: 'getUserById',
         id: Joi.number().required()
       },
-      function(req, reply) {
+      function getUserById(req, reply) {
         reply(null, store.getUserById(req.id))
       }
     )
@@ -27,7 +27,7 @@ export default Hp(
           .email()
           .required()
       },
-      function(req, reply) {
+      function getUserByEmail(req, reply) {
         reply(null, store.getUserByEmail(req.email))
       }
     )
@@ -43,7 +43,7 @@ export default Hp(
             .required()
         })
       },
-      function(req, reply) {
+      function createUser(req, reply) {
         reply(null, store.createUser(req.user))
       }
     )

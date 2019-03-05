@@ -1,12 +1,12 @@
 import Hapi from 'hapi'
 import { ApolloServer } from 'apollo-server-hapi'
 import { PubSub, makeExecutableSchema } from 'apollo-server'
-import graphqlSchema from './graphql/schema.graphql'
-import resolvers from './graphql/resolvers'
-import UserManagement from './plugins/user-management'
 import HemeraJoi from 'hemera-joi'
 import Hemera from 'nats-hemera'
 import Nats from 'nats'
+import graphqlSchema from './graphql/schema.graphql'
+import resolvers from './graphql/resolvers'
+import UserManagement from './plugins/user-management'
 
 const HOST = 'localhost'
 const PORT = 3000
@@ -58,6 +58,7 @@ function createHemera() {
   return hemera
 }
 
+/* eslint-disable no-console */
 async function start() {
   try {
     const hemera = createHemera()
@@ -69,7 +70,7 @@ async function start() {
     console.log(`🚀  Graphql Server running at: ${server.info.uri}/graphql`)
   } catch (err) {
     console.error(err)
-    process.exit(1)
+    throw err
   }
 }
 
